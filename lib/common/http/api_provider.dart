@@ -18,7 +18,7 @@ class ApiProvider {
     dynamic responseJson;
     try {
       final dynamic response =
-          await http.post(Uri.encodeFull(url), body: body, headers: {
+          await http.post(Uri.parse(url), body: body, headers: {
         'content-type': 'application/json',
         'accept': 'application/json',
         'Authorization': 'Bearer ' + token
@@ -33,7 +33,7 @@ class ApiProvider {
   Future<dynamic> get(String url, {String token = '', dynamic query}) async {
     dynamic responseJson;
     try {
-      final dynamic response = await http.get(Uri.encodeFull(url), headers: {
+      final dynamic response = await http.get(Uri.parse(url), headers: {
         'content-type': 'application/json',
         'accept': 'application/json',
         'Authorization': 'Bearer ' + token

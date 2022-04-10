@@ -7,11 +7,14 @@ import 'package:flutter_boilerplate/app/app.dart';
 import 'package:flutter_boilerplate/common/bloc/simple_bloc_delegate.dart';
 import 'package:flutter_boilerplate/common/constant/env.dart';
 
-void main() {
-  Bloc.observer = SimpleBlocDelegate();
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
 
-  runZonedGuarded(() {
-    runApp(App(env: EnvValue.development));
-  }, (error, stackTrace) async {});
+  BlocOverrides.runZoned(
+    () {
+      runApp(App(env: EnvValue.development));
+    },
+    blocObserver: SimpleBlocDelegate(),
+  );
 }

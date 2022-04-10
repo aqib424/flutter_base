@@ -4,8 +4,14 @@ final ThemeData basicTheme = _buildBasicTheme();
 
 TextTheme _buildTextTheme(TextTheme base) {
   return base.copyWith(
-    title: base.title.copyWith(
-      fontFamily: 'GoogleSans',
+    headline1: base.headline1.copyWith(
+      // fontFamily: "OpenSans",
+      fontStyle: FontStyle.normal,
+      color: Colors.white,
+    ),
+    bodyText1: base.bodyText1.copyWith(
+      // fontFamily: "OpenSans",
+      color: Colors.black,
     ),
   );
 }
