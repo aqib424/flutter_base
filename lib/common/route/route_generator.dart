@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/feature/home/ui/screen/home_page.dart';
 import 'package:flutter_boilerplate/feature/landing/landing_page.dart';
 import 'package:flutter_boilerplate/feature/signin_signup/resources/auth_repository.dart';
 import 'package:flutter_boilerplate/feature/signin_signup/ui/sign_in_page.dart';
@@ -32,13 +31,6 @@ class RouteGenerator {
 
         return _errorRoute();
 
-      case Routes.home:
-        return MaterialPageRoute<dynamic>(
-            builder: (_) => Scaffold(
-                appBar: AppBar(
-                  title: const Text('Books'),
-                ),
-                body: HomePage()));
       default:
         return _errorRoute();
     }
