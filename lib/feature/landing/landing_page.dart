@@ -5,7 +5,6 @@ import 'package:flutter_boilerplate/common/http/api_provider.dart';
 import 'package:flutter_boilerplate/common/util/internet_check.dart';
 import 'package:flutter_boilerplate/common/widget/loading_widget.dart';
 import 'package:flutter_boilerplate/feature/authentication/bloc/index.dart';
-import 'package:flutter_boilerplate/feature/home/ui/screen/home_page.dart';
 import 'package:flutter_boilerplate/feature/landing/splash_page.dart';
 import 'package:flutter_boilerplate/feature/signin_signup/resources/auth_repository.dart';
 import 'package:flutter_boilerplate/feature/signin_signup/ui/sign_in_page.dart';
@@ -20,9 +19,7 @@ class LandingPage extends StatelessWidget {
             return const LoadingWidget();
           }
 
-          if (state is AuthenticationAuthenticated) {
-            return HomePage();
-          }
+          if (state is AuthenticationAuthenticated) {}
           if (state is AuthenticationUnauthenticated) {
             return SignInPage(
                 authRepository: AuthRepository(
