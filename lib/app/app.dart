@@ -1,5 +1,11 @@
+import 'dart:developer';
+
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_authenticator/amplify_authenticator.dart';
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_boilerplate/amplifyconfiguration.dart';
 import 'package:flutter_boilerplate/common/bloc/connectivity/index.dart';
 import 'package:flutter_boilerplate/common/constant/env.dart';
 import 'package:flutter_boilerplate/common/http/api_provider.dart';
@@ -11,19 +17,41 @@ import 'package:flutter_boilerplate/feature/authentication/resource/user_reposit
 import 'package:flutter_boilerplate/generated/l10n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'theme.dart';
-
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   final Env env;
 
   App({Key key, @required this.env}) : super(key: key);
 
   @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  @override
+  void initState() {
+    super.initState();
+    // _configureAmplify();
+  }
+
+  Future<void> _configureAmplify() async {
+    try {
+      // Add the following line to add Auth plugin to your app.
+      await Amplify.addPlugin(AmplifyAuthCognito());
+
+      // call Amplify.configure to use the initialized categories in your app
+      await Amplify.configure(amplifyconfig);
+    } on Exception catch (e) {
+      log('An error occurred configuring Amplify: $e');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
+    return Authenticator(
+      child: MultiRepositoryProvider(
         providers: [
           RepositoryProvider<Env>(
-            create: (context) => env,
+            create: (context) => widget.env,
             lazy: true,
           ),
           RepositoryProvider<InternetCheck>(
@@ -63,11 +91,14 @@ class App extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: S.delegate.supportedLocales,
-            title: 'Flutter Demo',
-            theme: basicTheme,
+            title: 'Authenticator demo',
+            theme: ThemeData.light(),
             onGenerateRoute: RouteGenerator.generateRoute,
+            // builder: Authenticator.builder(),
             initialRoute: Routes.landing,
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

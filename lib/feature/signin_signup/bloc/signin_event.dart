@@ -21,3 +21,9 @@ class SignInButtonPressed extends SignInEvent {
   String toString() =>
       'LoginButtonPressed { username: $username, password: $password }';
 }
+
+class UserSignedIn extends SignInEvent {
+  @override
+  // TODO: implement props
+  List<Object> get props => [];
+}
