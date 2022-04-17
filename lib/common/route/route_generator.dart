@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_boilerplate/feature/home/home_ui.dart';
+import 'package:flutter_boilerplate/feature/home/succes.dart';
 import 'package:flutter_boilerplate/feature/landing/landing_page.dart';
 import 'package:flutter_boilerplate/feature/signin_signup/resources/auth_repository.dart';
 import 'package:flutter_boilerplate/feature/signin_signup/ui/sign_in_page.dart';
@@ -14,6 +16,12 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.landing:
         return MaterialPageRoute<dynamic>(builder: (_) => LandingPage());
+
+      case Routes.home:
+        return MaterialPageRoute<dynamic>(builder: (_) => Home());
+
+      case Routes.success:
+        return MaterialPageRoute<dynamic>(builder: (_) => Success());
 
       case Routes.signIn:
         if (args is AuthRepository) {

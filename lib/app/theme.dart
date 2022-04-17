@@ -9,10 +9,20 @@ TextTheme _buildTextTheme(TextTheme base) {
       fontStyle: FontStyle.normal,
       color: Colors.white,
     ),
+    headline6: base.headline1.copyWith(
+      // fontFamily: "OpenSans",
+      fontStyle: FontStyle.normal,
+      color: Colors.white,
+    ),
+
     bodyText1: base.bodyText1.copyWith(
       // fontFamily: "OpenSans",
-      color: Colors.black,
+      color: Colors.white,
     ),
+    // titleSmall: base.titleSmall.copyWith(
+    //   // fontFamily: "OpenSans",
+    //   color: Colors.white,
+    // ),
   );
 }
 
@@ -27,15 +37,15 @@ ThemeData _buildBasicTheme() {
 //    brightness: Brightness.light,
 //    accentColorBrightness: Brightness.light,
     primaryColor: primaryColor,
-    //primaryColorDark: const Color(0xFF0050a0),
+    primaryColorDark: const Color(0xFF0050a0),
     primaryColorLight: secondaryColor,
     buttonColor: primaryColor,
-    indicatorColor: Colors.white,
+    indicatorColor: secondaryColor,
     toggleableActiveColor: primaryColor,
     accentColor: secondaryColor,
-    //canvasColor: const Color(0xFF202124),
-    //scaffoldBackgroundColor: const Color(0xFF202124),
-    //backgroundColor: const Color(0xFF202124),
+    // canvasColor: const Color(0xFF202124),
+    scaffoldBackgroundColor: const Color(0xFF131313),
+    // backgroundColor: const Color(0xFF131313),
     errorColor: Colors.red,
     buttonTheme: ButtonThemeData(
       colorScheme: colorScheme,
@@ -45,6 +55,6 @@ ThemeData _buildBasicTheme() {
   return base.copyWith(
     textTheme: _buildTextTheme(base.textTheme),
     primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
-    accentTextTheme: _buildTextTheme(base.accentTextTheme),
+    // accentTextTheme: _buildTextTheme(base.accentTextTheme),
   );
 }
