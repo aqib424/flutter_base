@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter_boilerplate/common/http/api_provider.dart';
 import 'package:meta/meta.dart';
+import 'package:slaughterandrancher/common/http/api_provider.dart';
 
 class AuthApiProvider {
   AuthApiProvider({@required this.baseUrl, @required this.apiProvider})

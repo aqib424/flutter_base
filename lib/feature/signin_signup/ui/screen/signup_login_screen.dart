@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/feature/signin_signup/ui/widgets/bottombar.dart';
-import 'package:flutter_boilerplate/feature/signin_signup/ui/widgets/signincontainerlarge.dart';
-import 'package:flutter_boilerplate/feature/signin_signup/ui/widgets/signincontainersmall.dart';
-import 'package:flutter_boilerplate/feature/signin_signup/ui/widgets/signupcontainerlarge.dart';
-import 'package:flutter_boilerplate/feature/signin_signup/ui/widgets/signupcontainersmall.dart';
-import 'package:flutter_boilerplate/feature/signin_signup/ui/widgets/topbar.dart';
+import 'package:slaughterandrancher/feature/signin_signup/ui/widgets/bottombar.dart';
+import 'package:slaughterandrancher/feature/signin_signup/ui/widgets/signincontainerlarge.dart';
+import 'package:slaughterandrancher/feature/signin_signup/ui/widgets/signincontainersmall.dart';
+import 'package:slaughterandrancher/feature/signin_signup/ui/widgets/signupcontainerlarge.dart';
+import 'package:slaughterandrancher/feature/signin_signup/ui/widgets/signupcontainersmall.dart';
+import 'package:slaughterandrancher/feature/signin_signup/ui/widgets/topbar.dart';
 
 class SignupLoginScreen extends StatefulWidget {
   @override
@@ -14,6 +14,7 @@ class SignupLoginScreen extends StatefulWidget {
 class _SignupLoginScreenState extends State<SignupLoginScreen>
     with TickerProviderStateMixin {
   bool isToggle = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

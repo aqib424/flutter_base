@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:flutter_boilerplate/common/bloc/connectivity/index.dart';
+import 'package:slaughterandrancher/common/bloc/connectivity/index.dart';
 
 class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
   StreamSubscription subscription;

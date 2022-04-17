@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_boilerplate/common/widget/loading_widget.dart';
-import 'package:flutter_boilerplate/feature/authentication/bloc/authentication_bloc.dart';
-import 'package:flutter_boilerplate/feature/authentication/bloc/authentication_event.dart';
-import 'package:flutter_boilerplate/feature/signin_signup/bloc/index.dart';
 import 'package:flutter_screenutil/size_extension.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:slaughterandrancher/common/widget/loading_widget.dart';
+import 'package:slaughterandrancher/feature/authentication/bloc/authentication_bloc.dart';
+import 'package:slaughterandrancher/feature/authentication/bloc/authentication_event.dart';
+import 'package:slaughterandrancher/feature/signin_signup/bloc/index.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -49,16 +48,10 @@ class _HomeState extends State<Home> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                          margin: EdgeInsets.only(top: 90.h),
-                          child: SvgPicture.asset(
-                              "assets/images/arrowquip_logo.svg")),
+                        margin: EdgeInsets.only(top: 90.h),
+                      ),
                       Container(
                         margin: EdgeInsets.only(top: 20.h),
-                        child: Text(
-                          "DEALER ASSIST",
-                          style: TextStyle(
-                              fontSize: 24.sp, fontWeight: FontWeight.bold),
-                        ),
                       ),
                       Container(
                         height: 90.h,

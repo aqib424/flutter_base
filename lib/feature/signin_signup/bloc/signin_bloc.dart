@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_boilerplate/feature/signin_signup/bloc/index.dart';
+import 'package:slaughterandrancher/feature/signin_signup/bloc/index.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
   SignInBloc() : super(SignInState()) {

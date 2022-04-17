@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_boilerplate/common/widget/loading_widget.dart';
-import 'package:flutter_boilerplate/feature/authentication/bloc/authentication_bloc.dart';
-import 'package:flutter_boilerplate/feature/authentication/bloc/authentication_event.dart';
 import 'package:flutter_screenutil/size_extension.dart';
+import 'package:slaughterandrancher/common/widget/loading_widget.dart';
+import 'package:slaughterandrancher/feature/authentication/bloc/authentication_bloc.dart';
+import 'package:slaughterandrancher/feature/authentication/bloc/authentication_event.dart';
 
 import '../signin_signup/bloc/index.dart';
 

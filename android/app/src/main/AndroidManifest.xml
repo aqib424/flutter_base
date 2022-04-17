@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.app.flutter_base">
-   <application
-        android:label="flutter_base"
+    package="com.arrowquip.SlaughterAndRancher">
+
+    <application
+        android:label="Slaughter And Rancher"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

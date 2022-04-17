@@ -1,4 +1,4 @@
-name: flutter_boilerplate
+name: slaughterandrancher
 description: A new Flutter application.
 
 # The following defines the version and build number for your application.
@@ -119,9 +119,17 @@ flutter_icons:
   android: true
   ios: true
 
+flutter_rename_app_plus:
+  application_name: Slaughter And Rancher
+  dart_package_name: slaughterandrancher
+  application_id: com.arrowquip.SlaughterAndRancher
+  bundle_id: com.arrowquip.SlaughterAndRancher
+  android_package_name: com.arrowquip.SlaughterAndRancher
+
+
 flutter_rename_app:
   application_name: Flutter Boilerplate
-  dart_package_name: flutter_boilerplate
+  dart_package_name: slaughterandrancher
   application_id: sadmansamee.flutter_boilerplate
   bundle_id: sadmansamee.flutter_boilerplate
   android_package_name: sadmansamee.flutter_boilerplate

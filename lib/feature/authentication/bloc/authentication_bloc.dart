@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:bloc/bloc.dart';
-import 'package:flutter_boilerplate/feature/authentication/resource/user_repository.dart';
+import 'package:slaughterandrancher/feature/authentication/resource/user_repository.dart';
 import 'package:meta/meta.dart';
 
 import 'authentication_event.dart';

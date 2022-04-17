@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_boilerplate/feature/home/home_ui.dart';
-import 'package:flutter_boilerplate/feature/home/succes.dart';
-import 'package:flutter_boilerplate/feature/landing/landing_page.dart';
-import 'package:flutter_boilerplate/feature/signin_signup/resources/auth_repository.dart';
-import 'package:flutter_boilerplate/feature/signin_signup/ui/sign_in_page.dart';
-import 'package:flutter_boilerplate/feature/signin_signup/ui/sign_up_page.dart';
+import 'package:slaughterandrancher/feature/home/home_ui.dart';
+import 'package:slaughterandrancher/feature/home/succes.dart';
+import 'package:slaughterandrancher/feature/landing/landing_page.dart';
+import 'package:slaughterandrancher/feature/signin_signup/resources/auth_repository.dart';
+import 'package:slaughterandrancher/feature/signin_signup/ui/sign_in_page.dart';
+import 'package:slaughterandrancher/feature/signin_signup/ui/sign_up_page.dart';
 
 import 'routes.dart';
 

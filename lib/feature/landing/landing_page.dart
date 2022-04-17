@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_boilerplate/common/widget/loading_widget.dart';
-import 'package:flutter_boilerplate/feature/authentication/bloc/index.dart';
-import 'package:flutter_boilerplate/feature/home/home_ui.dart';
-import 'package:flutter_boilerplate/feature/home/succes.dart';
-import 'package:flutter_boilerplate/feature/landing/splash_page.dart';
 import 'package:flutter_screenutil/screen_util.dart';
+import 'package:slaughterandrancher/common/widget/loading_widget.dart';
+import 'package:slaughterandrancher/feature/authentication/bloc/index.dart';
+import 'package:slaughterandrancher/feature/home/home_ui.dart';
+import 'package:slaughterandrancher/feature/home/succes.dart';
+import 'package:slaughterandrancher/feature/landing/splash_page.dart';
 
 class LandingPage extends StatelessWidget {
   @override

@@ -5,16 +5,16 @@ import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_boilerplate/amplifyconfiguration.dart';
-import 'package:flutter_boilerplate/common/bloc/connectivity/index.dart';
-import 'package:flutter_boilerplate/common/constant/env.dart';
-import 'package:flutter_boilerplate/common/http/api_provider.dart';
-import 'package:flutter_boilerplate/common/route/route_generator.dart';
-import 'package:flutter_boilerplate/common/route/routes.dart';
-import 'package:flutter_boilerplate/common/util/internet_check.dart';
-import 'package:flutter_boilerplate/feature/authentication/bloc/index.dart';
-import 'package:flutter_boilerplate/feature/authentication/resource/user_repository.dart';
-import 'package:flutter_boilerplate/generated/l10n.dart';
+import 'package:slaughterandrancher/amplifyconfiguration.dart';
+import 'package:slaughterandrancher/common/bloc/connectivity/index.dart';
+import 'package:slaughterandrancher/common/constant/env.dart';
+import 'package:slaughterandrancher/common/http/api_provider.dart';
+import 'package:slaughterandrancher/common/route/route_generator.dart';
+import 'package:slaughterandrancher/common/route/routes.dart';
+import 'package:slaughterandrancher/common/util/internet_check.dart';
+import 'package:slaughterandrancher/feature/authentication/bloc/index.dart';
+import 'package:slaughterandrancher/feature/authentication/resource/user_repository.dart';
+import 'package:slaughterandrancher/generated/l10n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 class App extends StatefulWidget {

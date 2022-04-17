@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter_boilerplate/feature/authentication/bloc/index.dart';
-import 'package:flutter_boilerplate/feature/signin_signup/bloc/index.dart';
-import 'package:flutter_boilerplate/feature/signin_signup/resources/auth_repository.dart';
+import 'package:slaughterandrancher/feature/authentication/bloc/index.dart';
+import 'package:slaughterandrancher/feature/signin_signup/bloc/index.dart';
+import 'package:slaughterandrancher/feature/signin_signup/resources/auth_repository.dart';
 import 'package:meta/meta.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
