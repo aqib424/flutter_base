@@ -1,57 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/size_extension.dart';
-import 'package:slaughterandrancher/common/widget/loading_widget.dart';
-import 'package:slaughterandrancher/feature/authentication/bloc/authentication_bloc.dart';
-import 'package:slaughterandrancher/feature/authentication/bloc/authentication_event.dart';
-
-import '../signin_signup/bloc/index.dart';
+import 'package:slaughterandrancher/app/theme.dart';
+import 'package:slaughterandrancher/common/widget/common_button.dart';
 
 class Success extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SignInBloc()..add(UserSignedIn()),
-      child: Scaffold(
-        body: BlocBuilder<SignInBloc, SignInState>(
-          builder: (context, state) {
-            if (state is UserSignedInSuccess) {
-              return Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text("Login Successful\n ${state.userName}"),
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 12.w, vertical: 60.h),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          BlocProvider.of<AuthenticationBloc>(context)
-                              .add(LoggedOut());
-                          Navigator.popUntil(context, (route) => route.isFirst);
-                        },
-                        child: Text("Sign Out"),
-                        style: ElevatedButton.styleFrom(
-                            primary: Color(0xFF214d27),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(8.sp), // <-- Radius
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 132.w, vertical: 20.h),
-                            textStyle: TextStyle(
-                                fontSize: 24.sp, fontWeight: FontWeight.bold)),
-                      ),
-                    )
-                  ],
-                ),
-              );
-            }
-            return LoadingWidget(
-              visible: true,
-            );
-          },
+    return Scaffold(
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Image.asset("assets/images/success.png"),
+            SizedBox(
+              height: 25.h,
+            ),
+            Text("Success!",
+                style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 30.sp,
+                    color: primaryColor)),
+            SizedBox(
+              height: 20.h,
+            ),
+            Text("Booking Request \nRecieved!",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20.sp,
+                    color: Colors.black.withOpacity(0.5),
+                    height: 1.5)),
+            SizedBox(
+              height: 144.h,
+            ),
+            Container(
+                margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
+                child: CommonButton(
+                    title: "Return To Home",
+                    color: primaryColor,
+                    radius: 20.sp,
+                    onPressed: () {
+                      Navigator.popUntil(context, (route) => route.isFirst);
+                    },
+                    width: 355.w))
+          ],
         ),
       ),
     );

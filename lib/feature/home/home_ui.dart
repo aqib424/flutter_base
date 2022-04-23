@@ -1,190 +1,306 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/size_extension.dart';
-import 'package:slaughterandrancher/common/widget/loading_widget.dart';
-import 'package:slaughterandrancher/feature/authentication/bloc/authentication_bloc.dart';
-import 'package:slaughterandrancher/feature/authentication/bloc/authentication_event.dart';
-import 'package:slaughterandrancher/feature/signin_signup/bloc/index.dart';
+import 'dart:developer';
+import 'dart:ui';
 
-class Home extends StatefulWidget {
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/size_extension.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:slaughterandrancher/app/theme.dart';
+import 'package:slaughterandrancher/common/widget/common_button.dart';
+import 'package:slaughterandrancher/feature/home/appointment/appointments.dart';
+import 'package:slaughterandrancher/feature/home/home.dart';
+import 'package:slaughterandrancher/feature/home/inventory/inventory_ui.dart';
+
+import '../../common/route/routes.dart';
+
+class HomeUI extends StatefulWidget {
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeUI> createState() => _HomeUIState();
 }
 
-class _HomeState extends State<Home> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+class _HomeUIState extends State<HomeUI> {
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SignInBloc(),
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xFF214d27),
-          automaticallyImplyLeading: false,
-          elevation: 0,
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+        backgroundColor: currentIndex == 0 ? backgroundColor : Colors.white,
+        titleSpacing: 10.w,
+        title: Container(
+          width: 150.w,
+          height: 24.h,
+          child: currentIndex == 1
+              ? Text(
+                  "My Appointment",
+                  style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20.sp,
+                      color: Colors.black),
+                )
+              : currentIndex == 3
+                  ? Text(
+                      "My Inventory",
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20.sp,
+                          letterSpacing: -0.01,
+                          color: Colors.black),
+                    )
+                  : Image.asset("assets/images/arrowquip_logo.png"),
         ),
-        body: BlocListener<SignInBloc, SignInState>(
-          listener: (context, state) {
-            if (state is SignInSuccess) {
-              BlocProvider.of<AuthenticationBloc>(context)
-                ..add(LoggedIn(token: state.token));
-              Navigator.popUntil(context, (route) => route.isFirst);
+        elevation: 0,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.profile);
+              },
+              icon: Icon(
+                CupertinoIcons.person_crop_circle_fill,
+                color: primaryColor,
+                size: 35,
+              ))
+        ],
+      ),
+      body: currentIndex == 1
+          ? Appointments()
+          : currentIndex == 3
+              ? InventoryUI()
+              : Home(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          _buySellModal(context);
+        },
+        child: Container(
+          height: 60.sp,
+          width: 60.sp,
+          decoration: BoxDecoration(
+              color: primaryColor,
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Color(0xFF1A5E1E),
+              ),
+              boxShadow: [
+                BoxShadow(
+                    color: primaryColor.withOpacity(0.3),
+                    spreadRadius: 1,
+                    blurRadius: 8,
+                    offset: Offset(0, 6)),
+              ]),
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+            size: 24.sp,
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        height: 76.h,
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+              offset: Offset(0, -1),
+              color: primaryColor.withOpacity(0.1),
+              blurRadius: 74.sp)
+        ]),
+        child: BottomNavigationBar(
+          elevation: 0,
+          selectedLabelStyle: Theme.of(context).textTheme.bodyText1.copyWith(
+              fontWeight: FontWeight.w400,
+              fontSize: 13.sp,
+              color: primaryColor),
+          unselectedLabelStyle: Theme.of(context).textTheme.bodyText1.copyWith(
+              fontWeight: FontWeight.w400,
+              fontSize: 13.sp,
+              color: unSelectedTextColor),
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          selectedItemColor: primaryColor,
+          unselectedItemColor: unSelectedTextColor,
+          type: BottomNavigationBarType.fixed,
+          currentIndex: currentIndex,
+          onTap: (value) {
+            log("on tap ===> $value");
+            if (currentIndex == 2) {
+              currentIndex = 0;
+              setState(() {});
+            } else {
+              currentIndex = value;
+              setState(() {});
             }
           },
-          child: BlocBuilder<SignInBloc, SignInState>(
-            builder: (context, state) {
-              if (state is SignInFailure) {
-                return Center(
-                  child: Text(state.error),
-                );
-              }
-              return Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 90.h),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 20.h),
-                      ),
-                      Container(
-                        height: 90.h,
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        margin: EdgeInsets.only(top: 60.h),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Email"),
-                            TextFormField(
-                              controller: emailController,
-                              keyboardType: TextInputType.emailAddress,
-                              decoration: InputDecoration(
-                                // labelText: "Email",
-                                hintText: "Email",
-                                enabled: true,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 1,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 1,
-                                    color: Colors.black,
-                                  ),
-                                ),
-
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.red,
-                                  ),
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 8.w,
-                                  vertical: 22.h,
-                                ),
-                              ),
-                              validator: (value) {},
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        // height: 90,
-                        margin: EdgeInsets.only(bottom: 14.h, top: 20.h),
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextFormField(
-                              controller: passwordController,
-                              keyboardType: TextInputType.emailAddress,
-                              decoration: InputDecoration(
-                                // labelText: "Email",
-                                hintText: "Password",
-                                enabled: true,
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 1,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 1,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 4.w,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 8.w,
-                                  vertical: 22.h,
-                                ),
-                              ),
-                              validator: (value) {},
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                          alignment: Alignment.topLeft,
-                          margin: EdgeInsets.only(left: 20.w, bottom: 28.h),
-                          child: Text(
-                            "Forgot Password?",
-                            style: TextStyle(
-                                fontSize: 14.sp,
-                                color: Color(0xFF214d27),
-                                fontWeight: FontWeight.bold),
-                          )),
-                      state is SignInLoading
-                          ? LoadingWidget(
-                              visible: true,
-                            )
-                          : ElevatedButton(
-                              onPressed: () {
-                                onLoginPressed(context);
-                              },
-                              child: Text("Login"),
-                              style: ElevatedButton.styleFrom(
-                                  primary: Color(0xFF214d27),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(8), // <-- Radius
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 144.w, vertical: 20.h),
-                                  textStyle: TextStyle(
-                                      fontSize: 24.sp,
-                                      fontWeight: FontWeight.bold)),
-                            )
-                    ],
+          items: [
+            BottomNavigationBarItem(
+                activeIcon: Container(
+                    margin: EdgeInsets.only(bottom: 6.h),
+                    child: SvgPicture.asset(
+                      "assets/images/bottom_navigation_bar/home.svg",
+                    )),
+                icon: Container(
+                    margin: EdgeInsets.only(bottom: 6.h),
+                    child: SvgPicture.asset(
+                      "assets/images/bottom_navigation_bar/home.svg",
+                      color: Colors.grey,
+                    )),
+                label: "Home"),
+            BottomNavigationBarItem(
+                activeIcon: Container(
+                    margin: EdgeInsets.only(bottom: 6.h),
+                    child: SvgPicture.asset(
+                      "assets/images/bottom_navigation_bar/calendar.svg",
+                      color: primaryColor,
+                    )),
+                icon: Container(
+                    margin: EdgeInsets.only(bottom: 6.h),
+                    child: SvgPicture.asset(
+                        "assets/images/bottom_navigation_bar/calendar.svg")),
+                label: "Appointment"),
+            BottomNavigationBarItem(icon: Container(), label: ""),
+            BottomNavigationBarItem(
+                activeIcon: Container(
+                    margin: EdgeInsets.only(bottom: 6.h),
+                    child: SvgPicture.asset(
+                      "assets/images/bottom_navigation_bar/inventory.svg",
+                      color: primaryColor,
+                    )),
+                icon: Container(
+                    margin: EdgeInsets.only(bottom: 6.h),
+                    child: SvgPicture.asset(
+                        "assets/images/bottom_navigation_bar/inventory.svg")),
+                label: "Inventory"),
+            BottomNavigationBarItem(
+                activeIcon: Container(
+                  margin: EdgeInsets.only(bottom: 6.h),
+                  child: SvgPicture.asset(
+                    "assets/images/bottom_navigation_bar/bar-chart-line.svg",
+                    color: primaryColor,
                   ),
                 ),
-              );
-            },
-          ),
+                icon: Container(
+                  margin: EdgeInsets.only(bottom: 6.h),
+                  child: SvgPicture.asset(
+                      "assets/images/bottom_navigation_bar/bar-chart-line.svg"),
+                ),
+                label: "Stats"),
+          ],
         ),
       ),
     );
   }
 
-  void onLoginPressed(BuildContext context) {
-    BlocProvider.of<SignInBloc>(context).add(SignInButtonPressed(
-        username: emailController.text.trim(),
-        password: passwordController.text));
+  void _buySellModal(BuildContext context) {
+    showModalBottomSheet(
+        barrierColor: Color(0xFF0D2916).withOpacity(0.3),
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (builder) {
+          return Container(
+            height: 300.h,
+            color: Color(0xFFF6F6F9).withOpacity(0.2),
+            child: Column(
+              children: [
+                Container(
+                  height: 176.h,
+                  width: 335.w,
+                  margin:
+                      EdgeInsets.only(left: 18.w, right: 18.w, bottom: 24.h),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.sp),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, Routes.scheduleAppointment);
+                        },
+                        child: Container(
+                          height: 156.h,
+                          width: 153.w,
+                          margin: EdgeInsets.all(10.sp),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(16.sp),
+                                topLeft: Radius.circular(16.sp),
+                                bottomLeft: Radius.circular(16.sp)),
+                            color: primaryColor,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset("assets/images/bull.svg"),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              Text("Buy",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      .copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 20.sp,
+                                          color: Colors.white))
+                            ],
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, Routes.scheduleAppointment);
+                        },
+                        child: Container(
+                          height: 156.h,
+                          width: 153.w,
+                          // margin: EdgeInsets.only(left: 18.w, right: 18.w ,bottom: 24.h),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(16.sp),
+                                topLeft: Radius.circular(16.sp),
+                                bottomRight: Radius.circular(16.sp)),
+                            color: Color(0xFFCF202F),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset("assets/images/cart.svg"),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              Text("Sell",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      .copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 20.sp,
+                                          color: Colors.white))
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                    margin: EdgeInsets.only(
+                      left: 18.w,
+                      right: 18.w,
+                      bottom: 38.h,
+                    ),
+                    child: CommonButton(
+                      title: "Cancel",
+                      color: Colors.white,
+                      onPressed: () {},
+                      width: 335.w,
+                      radius: 20.sp,
+                      titleColor: Colors.black,
+                    ))
+              ],
+            ),
+          );
+        });
   }
 }

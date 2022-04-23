@@ -6,9 +6,9 @@ class FormValidator {
     return true;
   }
 
-  static bool validateEmail(String value) {
+  static String validateEmail(String value) {
     if (value.isEmpty) {
-      return false;
+      return "Please Enter Email";
     }
     // Regex for email validation
     String p = "[a-zA-Z0-9\+\.\_\%\-\+]{1,256}" +
@@ -20,20 +20,20 @@ class FormValidator {
         ")+";
     RegExp regExp = new RegExp(p);
     if (regExp.hasMatch(value)) {
-      return true;
+      return null;
     }
-    return false;
+    return "Please Enter Valid Email";
   }
 
-  static bool validatePassword(String value) {
+  static String validatePassword(String value) {
     if (value.isEmpty) {
-      return false;
+      return "Please Enter Password";
     }
     // Use any password length of your choice here
     if (value.length < 5) {
-      return false;
+      return "Must be atleast 6 characters, have an uppercase leter and a special symbol";
     }
 
-    return true;
+    return null;
   }
 }

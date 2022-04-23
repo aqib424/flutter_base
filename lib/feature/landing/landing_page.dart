@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/screen_util.dart';
 import 'package:slaughterandrancher/common/widget/loading_widget.dart';
 import 'package:slaughterandrancher/feature/authentication/bloc/index.dart';
 import 'package:slaughterandrancher/feature/home/home_ui.dart';
-import 'package:slaughterandrancher/feature/home/succes.dart';
 import 'package:slaughterandrancher/feature/landing/splash_page.dart';
+import 'package:slaughterandrancher/feature/signin_signup/ui/sign_in_page.dart';
 
 class LandingPage extends StatelessWidget {
   @override
@@ -26,16 +26,10 @@ class LandingPage extends StatelessWidget {
           }
 
           if (state is AuthenticationAuthenticated) {
-            return Success();
+            return HomeUI();
           }
           if (state is AuthenticationUnauthenticated) {
-            // return SignInPage(
-            //     authRepository: AuthRepository(
-            //         env: RepositoryProvider.of<Env>(context),
-            //         apiProvider: RepositoryProvider.of<ApiProvider>(context),
-            //         internetCheck:
-            //             RepositoryProvider.of<InternetCheck>(context)));
-            return Home();
+            return SignInPage();
           }
 
           return SplashPage();

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+const primaryColor = Color(0xFF174425);
+const backgroundColor = Color(0xFFF6F6F9);
+const unSelectedTextColor = Color(0xFF7F8581);
+
 final ThemeData basicTheme = _buildBasicTheme();
 
 TextTheme _buildTextTheme(TextTheme base) {

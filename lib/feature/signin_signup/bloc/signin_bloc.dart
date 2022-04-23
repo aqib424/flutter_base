@@ -24,7 +24,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
             token: user.userId,
           ));
         }
+        log("response ===> $response");
       } catch (error) {
+        log("exception ==> ${error}");
         emit(SignInFailure(error: error.toString()));
       }
     });
@@ -38,6 +40,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         emit(UserSignedInSuccess(userName: user.username));
       } catch (ex, stack) {
         debugPrintStack(label: ex.toString(), stackTrace: stack);
+        emit(SignInFailure(error: ex["recoverySuggestion"]));
       }
     });
   }

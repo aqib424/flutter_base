@@ -1,7 +1,13 @@
+import 'dart:developer';
+
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_authenticator/amplify_authenticator.dart';
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:screen_size_test/screen_size_test.dart';
+import 'package:slaughterandrancher/amplifyconfiguration.dart';
 import 'package:slaughterandrancher/common/bloc/connectivity/index.dart';
 import 'package:slaughterandrancher/common/constant/env.dart';
 import 'package:slaughterandrancher/common/http/api_provider.dart';
@@ -12,21 +18,33 @@ import 'package:slaughterandrancher/feature/authentication/bloc/index.dart';
 import 'package:slaughterandrancher/feature/authentication/resource/user_repository.dart';
 import 'package:slaughterandrancher/generated/l10n.dart';
 
-class App extends StatefulWidget {
+class DebugApp extends StatefulWidget {
   final Env env;
 
-  App({Key key, @required this.env}) : super(key: key);
+  DebugApp({Key key, @required this.env}) : super(key: key);
 
   @override
-  State<App> createState() => _AppState();
+  State<DebugApp> createState() => _DebugAppState();
 }
 
-class _AppState extends State<App> {
+class _DebugAppState extends State<DebugApp> {
   @override
   void initState() {
     super.initState();
+    // _configureAmplify();
   }
 
+  Future<void> _configureAmplify() async {
+    try {
+      // Add the following line to add Auth plugin to your app.
+      await Amplify.addPlugin(AmplifyAuthCognito());
+
+      // call Amplify.configure to use the initialized categories in your app
+      await Amplify.configure(amplifyconfig);
+    } on Exception catch (e) {
+      log('An error occurred configuring Amplify: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +85,9 @@ class _AppState extends State<App> {
             ),
           ],
           child: MaterialApp(
+            builder: (context, child) => ScreenSizeTest(
+              child: child,
+            ),
             localizationsDelegates: [
               S.delegate,
               GlobalMaterialLocalizations.delegate,

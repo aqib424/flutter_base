@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:slaughterandrancher/feature/home/home_ui.dart';
+import 'package:slaughterandrancher/feature/home/home.dart';
 import 'package:slaughterandrancher/feature/home/succes.dart';
 import 'package:slaughterandrancher/feature/landing/landing_page.dart';
+import 'package:slaughterandrancher/feature/profile/ui/profile.dart';
+import 'package:slaughterandrancher/feature/schedule_appointment/ui/schedule_appointment.dart';
+import 'package:slaughterandrancher/feature/schedule_appointment/ui/select_appointment_time.dart';
 import 'package:slaughterandrancher/feature/signin_signup/resources/auth_repository.dart';
+import 'package:slaughterandrancher/feature/signin_signup/ui/change_password.dart';
+import 'package:slaughterandrancher/feature/signin_signup/ui/forgot_password.dart';
 import 'package:slaughterandrancher/feature/signin_signup/ui/sign_in_page.dart';
 import 'package:slaughterandrancher/feature/signin_signup/ui/sign_up_page.dart';
 
@@ -20,14 +25,30 @@ class RouteGenerator {
       case Routes.home:
         return MaterialPageRoute<dynamic>(builder: (_) => Home());
 
+      case Routes.scheduleAppointment:
+        return MaterialPageRoute<dynamic>(
+            builder: (_) => ScheduleAppointment());
+
+      case Routes.profile:
+        return MaterialPageRoute<dynamic>(builder: (_) => Profile());
+
+      case Routes.forgotPassword:
+        return MaterialPageRoute<dynamic>(builder: (_) => ForgotPassword());
+
+      case Routes.changePassword:
+        return MaterialPageRoute<dynamic>(builder: (_) => ChangePassword());
+
+      case Routes.selectAppointmentTime:
+        return MaterialPageRoute<dynamic>(
+            builder: (_) => SelectAppointmentTime(
+                  text: args,
+                ));
+
       case Routes.success:
         return MaterialPageRoute<dynamic>(builder: (_) => Success());
 
       case Routes.signIn:
-        if (args is AuthRepository) {
-          return MaterialPageRoute<dynamic>(
-              builder: (_) => SignInPage(authRepository: args));
-        }
+        return MaterialPageRoute<dynamic>(builder: (_) => SignInPage());
 
         return _errorRoute();
 

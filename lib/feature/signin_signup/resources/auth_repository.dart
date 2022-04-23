@@ -16,8 +16,7 @@ class AuthRepository {
       {@required this.env,
       @required this.apiProvider,
       @required this.internetCheck}) {
-    authApiProvider =
-        AuthApiProvider(baseUrl: env.baseUrl, apiProvider: apiProvider);
+    authApiProvider = AuthApiProvider(baseUrl: null, apiProvider: null);
   }
 
   Future<DataResponse<String>> signIn(String email, String password) async {
