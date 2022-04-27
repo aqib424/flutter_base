@@ -36,7 +36,10 @@ class RouteGenerator {
         return MaterialPageRoute<dynamic>(builder: (_) => ForgotPassword());
 
       case Routes.changePassword:
-        return MaterialPageRoute<dynamic>(builder: (_) => ChangePassword());
+        return MaterialPageRoute<dynamic>(
+            builder: (_) => ChangePassword(
+                  email: args,
+                ));
 
       case Routes.selectAppointmentTime:
         return MaterialPageRoute<dynamic>(

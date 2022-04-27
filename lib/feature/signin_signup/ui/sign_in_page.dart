@@ -24,6 +24,8 @@ class _SignInPageState extends State<SignInPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool isVisible = true;
+  bool isValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,9 @@ class _SignInPageState extends State<SignInPage> {
             builder: (context, state) {
               return Form(
                 key: _formKey,
+                autovalidateMode: isValid
+                    ? AutovalidateMode.onUserInteraction
+                    : AutovalidateMode.disabled,
                 child: Container(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
@@ -87,12 +92,21 @@ class _SignInPageState extends State<SignInPage> {
                                 Icons.lock_outlined,
                                 color: primaryColor,
                               ),
-                              surfixIcon: Container(
-                                  margin: EdgeInsets.only(right: 20.w),
-                                  child: Icon(
-                                    Icons.visibility_outlined,
-                                    color: Colors.black.withOpacity(0.2),
-                                  )),
+                              obscureText: isVisible,
+                              surfixIcon: GestureDetector(
+                                onTap: () {
+                                  isVisible = !isVisible;
+                                  setState(() {});
+                                },
+                                child: Container(
+                                    margin: EdgeInsets.only(right: 20.w),
+                                    child: Icon(
+                                      !isVisible
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                      color: Colors.black.withOpacity(0.2),
+                                    )),
+                              ),
                               validator: (value) {
                                 String error =
                                     FormValidator.validatePassword(value);
@@ -150,6 +164,9 @@ class _SignInPageState extends State<SignInPage> {
       BlocProvider.of<SignInBloc>(context).add(SignInButtonPressed(
           username: emailController.text.trim(),
           password: passwordController.text));
+    } else {
+      isValid = true;
+      setState(() {});
     }
   }
 }

@@ -207,7 +207,7 @@ class _HomeUIState extends State<HomeUI> {
                       EdgeInsets.only(left: 18.w, right: 18.w, bottom: 24.h),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.sp),
-                    color: Colors.white,
+                    // color: Colors.white,
                   ),
                   child: Row(
                     children: [
@@ -293,7 +293,9 @@ class _HomeUIState extends State<HomeUI> {
                     child: CommonButton(
                       title: "Cancel",
                       color: Colors.white,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       width: 335.w,
                       radius: 20.sp,
                       titleColor: Colors.black,

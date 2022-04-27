@@ -10,6 +10,7 @@ class CommonTextField extends StatelessWidget {
   final Function validator;
   final String hintText;
   final TextInputType keyboardType;
+  final bool obscureText;
 
   CommonTextField(
       {@required this.controller,
@@ -17,24 +18,26 @@ class CommonTextField extends StatelessWidget {
       @required this.surfixIcon,
       @required this.validator,
       @required this.hintText,
-      @required this.keyboardType});
+      @required this.keyboardType,
+      this.obscureText});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
+      obscureText: obscureText == null ? false : obscureText,
       decoration: InputDecoration(
-        prefixIcon: prefixIcon,
-        suffixIcon: surfixIcon,
-        fillColor: Colors.white,
-        filled: true,
-        hintText: hintText,
-        enabled: true,
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.sp),
-          borderSide: BorderSide(
-            color: Colors.red,
+          prefixIcon: prefixIcon,
+          suffixIcon: surfixIcon,
+          fillColor: Colors.white,
+          filled: true,
+          hintText: hintText,
+          enabled: true,
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20.sp),
+            borderSide: BorderSide(
+              color: Colors.red,
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -51,17 +54,20 @@ class CommonTextField extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.sp),
-          borderSide: BorderSide(
-            color: Colors.red,
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20.sp),
+            borderSide: BorderSide(
+              color: Colors.red,
+            ),
           ),
-        ),
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 8.w,
-          vertical: 22.h,
-        ),
-      ),
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 8.w,
+            vertical: 22.h,
+          ),
+          hintStyle: Theme.of(context).textTheme.bodyText1.copyWith(
+              fontWeight: FontWeight.w400,
+              fontSize: 15.sp,
+              color: primaryColor.withOpacity(0.3))),
       validator: validator,
     );
   }

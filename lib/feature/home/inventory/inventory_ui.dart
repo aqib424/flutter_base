@@ -24,6 +24,8 @@ class _InventoryUIState extends State<InventoryUI> {
     }
   ];
 
+  List<String> processed = ["Betty The Cow", "Valley"];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -112,76 +114,30 @@ class _InventoryUIState extends State<InventoryUI> {
             ),
           ),
           isHerd
-              ? Container(
-                  height: 104.h,
-                  width: 342.w,
-                  margin:
-                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-                  padding: EdgeInsets.all(12.sp),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.sp),
-                      color: Colors.white),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 80.h,
-                        width: 80.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.sp),
-                          color: Colors.green,
-                          image: DecorationImage(
-                              image:
-                                  AssetImage("assets/images/inventory/cow.png"),
-                              fit: BoxFit.contain),
-                        ),
-                      ),
-                      Container(
-                        height: 46.h,
-                        margin: EdgeInsets.only(left: 16.w),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                                // margin: EdgeInsets.only(bottom: 20.h),
-                                child: Text("Betty The Cow",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1
-                                        .copyWith(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 20.sp,
-                                            color: Colors.black))),
-                            Row(
-                              children: [
-                                SvgPicture.asset(
-                                    "assets/images/inventory/settings.svg"),
-                                SizedBox(
-                                  width: 6.w,
-                                ),
-                                Text("Manage",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1
-                                        .copyWith(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14.sp,
-                                            color: Colors.black)),
-                              ],
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              : _forSaleWidget(context),
+              ? GestureDetector(
+                  onHorizontalDragUpdate: (value) {
+                    if (value.delta.dx < 1 && isHerd) {
+                      setState(() {
+                        isHerd = !isHerd;
+                      });
+                    }
+                  },
+                  child: _processedWidget(context))
+              : GestureDetector(
+                  onHorizontalDragUpdate: (value) {
+                    if (value.delta.dx > 1 && !isHerd) {
+                      setState(() {
+                        isHerd = !isHerd;
+                      });
+                    }
+                  },
+                  child: _forSaleWidget(context)),
         ],
       ),
     );
   }
 
-  _forSaleWidget(BuildContext context) {
+  Widget _forSaleWidget(BuildContext context) {
     return ListView.builder(
         itemCount: forSale.length,
         shrinkWrap: true,
@@ -230,6 +186,75 @@ class _InventoryUIState extends State<InventoryUI> {
                               fontWeight: FontWeight.w400,
                               fontSize: 14.sp,
                               color: Colors.black)),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        });
+  }
+
+  Widget _processedWidget(BuildContext context) {
+    return ListView.builder(
+        itemCount: 2,
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return Container(
+            height: 104.h,
+            width: 342.w,
+            margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+            padding: EdgeInsets.all(12.sp),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.sp),
+                color: Colors.white),
+            child: Row(
+              children: [
+                Container(
+                  height: 80.h,
+                  width: 80.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.sp),
+                    color: Colors.green,
+                    image: DecorationImage(
+                        image: AssetImage("assets/images/inventory/cow.png"),
+                        fit: BoxFit.contain),
+                  ),
+                ),
+                Container(
+                  height: 46.h,
+                  margin: EdgeInsets.only(left: 16.w),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          // margin: EdgeInsets.only(bottom: 20.h),
+                          child: Text(processed[index],
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  .copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 20.sp,
+                                      color: Colors.black))),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                              "assets/images/inventory/settings.svg"),
+                          SizedBox(
+                            width: 6.w,
+                          ),
+                          Text("Manage",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  .copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14.sp,
+                                      color: Colors.black)),
+                        ],
+                      ),
                     ],
                   ),
                 )

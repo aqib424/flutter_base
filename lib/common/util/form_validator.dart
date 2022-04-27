@@ -26,14 +26,19 @@ class FormValidator {
   }
 
   static String validatePassword(String value) {
+    String pattern = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}\$";
+    RegExp regExp = RegExp(pattern);
     if (value.isEmpty) {
       return "Please Enter Password";
     }
-    // Use any password length of your choice here
-    if (value.length < 5) {
-      return "Must be atleast 6 characters, have an uppercase leter and a special symbol";
+    if (regExp.hasMatch(value)) {
+      return null;
     }
+    // Use any password length of your choice here
+    // if (value.length < 5) {
+    //   return "Must be atleast 6 characters, have an uppercase leter and a special symbol";
+    // }
 
-    return null;
+    return " \u2022  At least 8 characters \n \u2022  At least 1 uppercase letter \n \u2022  At least 1 lowercase letter \n \u2022  At least 1 number";
   }
 }

@@ -12,6 +12,25 @@ class Appointments extends StatefulWidget {
 
 class _AppointmentsState extends State<Appointments> {
   bool isUpComing = true;
+  List<Map> upComing = [
+    {
+      "name": "Arrowquip Kokomo",
+      "date": "Wednesday April 12th, 2022",
+      "time": "2:30 PM"
+    },
+    {
+      "name": "Thursday Morning",
+      "date": "Thursday April 09th, 2022",
+      "time": "6:30 PM"
+    },
+    {
+      "name": "Arrowquip Kokomo",
+      "date": "Sunday April 22th, 2022",
+      "time": "4:30 PM"
+    },
+  ];
+
+  List<Map> completed = [];
 
   @override
   Widget build(BuildContext context) {
@@ -100,100 +119,256 @@ class _AppointmentsState extends State<Appointments> {
               ],
             ),
           ),
-          Container(
-            height: 104.h,
-            // width: 342.w,
-            margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-            padding: EdgeInsets.all(12.sp),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.sp),
-                color: Colors.white),
-            child: Row(
-              children: [
-                Container(
-                  height: 80.h,
-                  width: 80.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.sp),
-                      color: Color(0xFFD22030).withOpacity(0.1)),
-                  child: Image.asset("assets/images/placeholder.png"),
-                ),
-                Expanded(
-                  child: Container(
-                    height: 68.h,
-                    // width: 208.w,
-                    margin: EdgeInsets.only(
-                      left: 12.w,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Expanded(
-                            child: Text("Arrowquip Kokomo",
-                                softWrap: true,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1
-                                    .copyWith(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 20.sp,
-                                        color: Colors.black)),
-                          ),
-                        ),
-                        Expanded(
+          // Container(
+          //   height: MediaQuery.of(context).size.height - 58,
+          //   color: Colors.green,
+          // ),
+          isUpComing
+              ? GestureDetector(
+                  onHorizontalDragUpdate: (value) {
+                    if (value.delta.dx < 1 && isUpComing) {
+                      setState(() {
+                        isUpComing = !isUpComing;
+                      });
+                    }
+                  },
+                  child: ListView.builder(
+                      itemCount: upComing.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          height: 104.h,
+                          // width: 342.w,
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 16.w, vertical: 10.h),
+                          padding: EdgeInsets.all(12.sp),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.sp),
+                              color: Colors.white),
                           child: Row(
                             children: [
-                              SvgPicture.asset(
-                                  "assets/images/appointment/calender.svg"),
-                              SizedBox(
-                                width: 6.w,
+                              Container(
+                                height: 80.h,
+                                width: 80.w,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12.sp),
+                                    color: Color(0xFFD22030).withOpacity(0.1)),
+                                child: Image.asset(
+                                    "assets/images/placeholder.png"),
                               ),
                               Expanded(
-                                child: Text("Tuesday April 12th, 2022",
-                                    softWrap: true,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1
-                                        .copyWith(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14.sp,
-                                            color:
-                                                Colors.black.withOpacity(0.7))),
+                                child: Container(
+                                  height: 68.h,
+                                  // width: 208.w,
+                                  margin: EdgeInsets.only(
+                                    left: 12.w,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        child: Expanded(
+                                          child: Text(upComing[index]["name"],
+                                              softWrap: true,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontSize: 20.sp,
+                                                      color: Colors.black)),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                                "assets/images/appointment/calender.svg"),
+                                            SizedBox(
+                                              width: 6.w,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                  upComing[index]["date"],
+                                                  softWrap: true,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1
+                                                      .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontSize: 14.sp,
+                                                          color: Colors.black
+                                                              .withOpacity(
+                                                                  0.7))),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.access_time_rounded,
+                                            color: Colors.black,
+                                            size: 16.sp,
+                                          ),
+                                          SizedBox(
+                                            width: 6.w,
+                                          ),
+                                          Text(upComing[index]["time"],
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 14.sp,
+                                                      color: Colors.black
+                                                          .withOpacity(0.7)))
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
                               )
                             ],
                           ),
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.access_time_rounded,
-                              color: Colors.black,
-                              size: 16.sp,
-                            ),
-                            SizedBox(
-                              width: 6.w,
-                            ),
-                            Text("2.5miles from you",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1
-                                    .copyWith(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.sp,
-                                        color: Colors.black.withOpacity(0.7)))
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
+                        );
+                      }),
                 )
-              ],
-            ),
-          )
+              : completed.length == 0
+                  ? GestureDetector(
+                      onHorizontalDragUpdate: (value) {
+                        if (value.delta.dx > 1 && !isUpComing) {
+                          setState(() {
+                            isUpComing = !isUpComing;
+                          });
+                        }
+                      },
+                      child: Container(
+                        height: 400.h,
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.only(top: 20.h),
+                        color: backgroundColor,
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: upComing.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          height: 104.h,
+                          // width: 342.w,
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 16.w, vertical: 10.h),
+                          padding: EdgeInsets.all(12.sp),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.sp),
+                              color: Colors.white),
+                          child: Row(
+                            children: [
+                              Container(
+                                height: 80.h,
+                                width: 80.w,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12.sp),
+                                    color: Color(0xFFD22030).withOpacity(0.1)),
+                                child: Image.asset(
+                                    "assets/images/placeholder.png"),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  height: 68.h,
+                                  // width: 208.w,
+                                  margin: EdgeInsets.only(
+                                    left: 12.w,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        child: Expanded(
+                                          child: Text(upComing[index]["name"],
+                                              softWrap: true,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontSize: 20.sp,
+                                                      color: Colors.black)),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                                "assets/images/appointment/calender.svg"),
+                                            SizedBox(
+                                              width: 6.w,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                  upComing[index]["date"],
+                                                  softWrap: true,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1
+                                                      .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontSize: 14.sp,
+                                                          color: Colors.black
+                                                              .withOpacity(
+                                                                  0.7))),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.access_time_rounded,
+                                            color: Colors.black,
+                                            size: 16.sp,
+                                          ),
+                                          SizedBox(
+                                            width: 6.w,
+                                          ),
+                                          Text(upComing[index]["time"],
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 14.sp,
+                                                      color: Colors.black
+                                                          .withOpacity(0.7)))
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      })
         ],
       ),
     );

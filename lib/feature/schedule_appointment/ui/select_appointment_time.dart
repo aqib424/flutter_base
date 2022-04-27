@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/size_extension.dart';
 import 'package:flutter_svg/svg.dart';
@@ -18,6 +20,23 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
   int selectedDateIndex = 0;
   int selectTimeIndex = 0;
   int amountOfCattle = 0;
+  TextEditingController descriptionController = TextEditingController();
+  DateTime curdate = DateTime.now();
+  int currentDate = DateTime.now().day;
+  int selectDateListItemCount;
+  int weekday;
+
+  String dayName;
+
+  List<String> weekdays = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -78,9 +97,9 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
                                     .textTheme
                                     .bodyText1
                                     .copyWith(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 20.sp,
-                                        color: Colors.black)),
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 20.sp,
+                                    color: Colors.black)),
                           ),
                           Container(
                             child: Text(widget.text,
@@ -88,15 +107,15 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
                                     .textTheme
                                     .bodyText1
                                     .copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.sp,
-                                        color:
-                                            widget.text == "High Availability"
-                                                ? Color(0xFF12B043)
-                                                : widget.text ==
-                                                        "Medium Availability"
-                                                    ? Color(0xFFFBA703)
-                                                    : Color(0xFFD22030))),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14.sp,
+                                    color:
+                                    widget.text == "High Availability"
+                                        ? Color(0xFF12B043)
+                                        : widget.text ==
+                                        "Medium Availability"
+                                        ? Color(0xFFFBA703)
+                                        : Color(0xFFD22030))),
                           ),
                           Row(
                             children: [
@@ -109,9 +128,9 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
                                       .textTheme
                                       .bodyText1
                                       .copyWith(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14.sp,
-                                          color: Colors.black.withOpacity(0.7)))
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14.sp,
+                                      color: Colors.black.withOpacity(0.7)))
                             ],
                           )
                         ],
@@ -129,61 +148,7 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
                         fontSize: 16.sp,
                         color: Colors.black)),
               ),
-              Container(
-                height: 110.h,
-                margin: EdgeInsets.only(left: 6.w),
-                child: ListView.builder(
-                    itemCount: 4,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          selectedDateIndex = index;
-                          setState(() {});
-                        },
-                        child: Container(
-                          width: 100.w,
-                          margin: EdgeInsets.only(
-                            left: 10.w,
-                          ),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.sp),
-                              color: index == selectedDateIndex
-                                  ? primaryColor
-                                  : Colors.white),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("${index + 1}",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      .copyWith(
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: 34.sp,
-                                          color: index == selectedDateIndex
-                                              ? Colors.white
-                                              : Colors.black)),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              Text("Tomorrow",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      .copyWith(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 15.sp,
-                                          color: index == selectedDateIndex
-                                              ? Colors.white
-                                              : Colors.black))
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
-              ),
+              _buildSelectDateWidget(context),
               Container(
                 margin: EdgeInsets.only(top: 30.h, left: 16.w, bottom: 10.h),
                 alignment: Alignment.topLeft,
@@ -222,11 +187,11 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
                                   .textTheme
                                   .bodyText1
                                   .copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 18.sp,
-                                      color: index == selectTimeIndex
-                                          ? Colors.white
-                                          : Colors.black)),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18.sp,
+                                  color: index == selectTimeIndex
+                                      ? Colors.white
+                                      : Colors.black)),
                         ),
                       );
                     }),
@@ -277,9 +242,9 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
                                   .textTheme
                                   .bodyText1
                                   .copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 24.sp,
-                                      color: Colors.black)),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 24.sp,
+                                  color: Colors.black)),
                         ),
                         InkWell(
                           onTap: () {
@@ -309,15 +274,28 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
                 height: 155.h,
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.symmetric(horizontal: 16.w),
-                padding: EdgeInsets.all(18.sp),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 18.w,
+                ),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.sp),
                     color: Colors.white),
-                child: Text("Write Something",
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(
+                child: TextFormField(
+                  controller: descriptionController,
+                  keyboardType: TextInputType.text,
+                  validator: (value) {},
+                  maxLines: 88,
+                  decoration: InputDecoration(
+                    hintText: "Write Something",
+                    hintStyle: Theme.of(context).textTheme.bodyText1.copyWith(
                         fontWeight: FontWeight.w400,
                         fontSize: 14.sp,
-                        color: Colors.black.withOpacity(0.3))),
+                        letterSpacing: -0.01,
+                        color: Colors.black.withOpacity(0.3)),
+                    disabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                  ),
+                ),
               ),
               Container(
                 margin: EdgeInsets.only(
@@ -336,6 +314,71 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildSelectDateWidget(BuildContext context) {
+    log("currentDate ++? $currentDate");
+    DateTime lastDayOfMonth = DateTime(curdate.year, curdate.month + 1, 0);
+    log("${lastDayOfMonth.month}/${lastDayOfMonth.day}");
+    selectDateListItemCount = lastDayOfMonth.day - curdate.day;
+    weekday = DateTime.now().weekday;
+    return Container(
+      height: 110.h,
+      margin: EdgeInsets.only(left: 6.w),
+      child: ListView.builder(
+          itemCount: selectDateListItemCount + 1,
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            if (index != 0) {
+              currentDate = currentDate + 1;
+              weekday = weekday + 1;
+            } else {
+              currentDate = DateTime.now().day;
+              weekday = DateTime.now().weekday;
+            }
+
+            return GestureDetector(
+              onTap: () {
+                selectedDateIndex = index;
+                setState(() {});
+              },
+              child: Container(
+                width: 100.w,
+                margin: EdgeInsets.only(
+                  left: 10.w,
+                ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.sp),
+                    color: index == selectedDateIndex
+                        ? primaryColor
+                        : Colors.white),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("$currentDate",
+                        style: Theme.of(context).textTheme.bodyText1.copyWith(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 34.sp,
+                            color: index == selectedDateIndex
+                                ? Colors.white
+                                : Colors.black)),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Text(weekdays[weekday - 1],
+                        style: Theme.of(context).textTheme.bodyText1.copyWith(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15.sp,
+                            color: index == selectedDateIndex
+                                ? Colors.white
+                                : Colors.black))
+                  ],
+                ),
+              ),
+            );
+          }),
     );
   }
 }
