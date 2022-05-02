@@ -234,7 +234,7 @@ class _HomeUIState extends State<HomeUI> {
                               SizedBox(
                                 height: 20.h,
                               ),
-                              Text("Buy",
+                              Text("Book",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1
@@ -248,8 +248,8 @@ class _HomeUIState extends State<HomeUI> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(
-                              context, Routes.scheduleAppointment);
+                          // Navigator.pushNamed(
+                          //     context, Routes.scheduleAppointment);
                         },
                         child: Container(
                           height: 156.h,

@@ -20,12 +20,14 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
   int selectedDateIndex = 0;
   int selectTimeIndex = 0;
   int amountOfCattle = 0;
+  int addNumber;
+
   TextEditingController descriptionController = TextEditingController();
   DateTime curdate = DateTime.now();
   int currentDate = DateTime.now().day;
   int selectDateListItemCount;
   int weekday;
-
+  TextEditingController numberOfCattelController = TextEditingController();
   String dayName;
 
   List<String> weekdays = [
@@ -225,9 +227,16 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
                       children: [
                         InkWell(
                           onTap: () {
-                            if (amountOfCattle > 0) {
-                              amountOfCattle = amountOfCattle - 1;
+                            if (numberOfCattelController.text.isEmpty) {
+                            } else {
+                              if (numberOfCattelController.text != "0") {
+                                addNumber =
+                                    int.parse(numberOfCattelController.text);
+                                numberOfCattelController.text =
+                                    (addNumber - 1).toString();
+                              }
                             }
+
                             setState(() {});
                           },
                           child: Icon(
@@ -235,20 +244,47 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
                             color: Colors.grey,
                           ),
                         ),
+
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10.w),
-                          child: Text("${amountOfCattle}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  .copyWith(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 24.sp,
-                                  color: Colors.black)),
+                          width: 30.w,
+                          height: 38.h,
+                          padding:
+                              EdgeInsets.symmetric(vertical: 6, horizontal: 2),
+                          child: TextFormField(
+                            controller: numberOfCattelController,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration.collapsed(
+                              hintText: "0",
+                            ),
+                            validator: (value) {},
+                          ),
                         ),
+
+                        // Container(
+                        //   margin: EdgeInsets.symmetric(horizontal: 10.w),
+                        //   child: Text("${amountOfCattle}",
+                        //       style: Theme.of(context)
+                        //           .textTheme
+                        //           .bodyText1
+                        //           .copyWith(
+                        //           fontWeight: FontWeight.w500,
+                        //           fontSize: 24.sp,
+                        //           color: Colors.black)),
+                        // ),
+
                         InkWell(
                           onTap: () {
-                            amountOfCattle = amountOfCattle + 1;
+                            if (numberOfCattelController.text.isEmpty) {
+                              amountOfCattle = amountOfCattle + 1;
+                              numberOfCattelController.text =
+                                  amountOfCattle.toString();
+                            } else {
+                              addNumber =
+                                  int.parse(numberOfCattelController.text);
+                              numberOfCattelController.text =
+                                  (addNumber + 1).toString();
+                            }
+
                             setState(() {});
                           },
                           child: Icon(
