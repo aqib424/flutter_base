@@ -27,8 +27,10 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
   int currentDate = DateTime.now().day;
   int selectDateListItemCount;
   int weekday;
+
   TextEditingController numberOfCattelController = TextEditingController();
-  String dayName;
+  List<Map> dayName = [];
+  List remainingMonthDates = [];
 
   List<String> weekdays = [
     "Monday",
@@ -249,28 +251,30 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
                           width: 30.w,
                           height: 38.h,
                           padding:
-                              EdgeInsets.symmetric(vertical: 6, horizontal: 2),
+                              EdgeInsets.symmetric(vertical: 2, horizontal: 2),
                           child: TextFormField(
                             controller: numberOfCattelController,
                             keyboardType: TextInputType.number,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                .copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 24.sp,
+                                    color: Colors.black),
                             decoration: InputDecoration.collapsed(
-                              hintText: "0",
-                            ),
+                                hintText: "0",
+                                hintStyle: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    .copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 24.sp,
+                                        color: primaryColor.withOpacity(0.3))),
                             validator: (value) {},
                           ),
                         ),
 
-                        // Container(
-                        //   margin: EdgeInsets.symmetric(horizontal: 10.w),
-                        //   child: Text("${amountOfCattle}",
-                        //       style: Theme.of(context)
-                        //           .textTheme
-                        //           .bodyText1
-                        //           .copyWith(
-                        //           fontWeight: FontWeight.w500,
-                        //           fontSize: 24.sp,
-                        //           color: Colors.black)),
-                        // ),
 
                         InkWell(
                           onTap: () {
@@ -359,6 +363,25 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
     log("${lastDayOfMonth.month}/${lastDayOfMonth.day}");
     selectDateListItemCount = lastDayOfMonth.day - curdate.day;
     weekday = DateTime.now().weekday;
+    weekday = weekday - 1;
+    log("weekday ==> $weekday");
+    log("selectDate List Item Count ==> $selectDateListItemCount");
+    int newValue = 0;
+    dayName.clear();
+    for (var i = 0; i < selectDateListItemCount + 1; i++) {
+      if (i == 7 || i == 14 || i == 21 || i == 28) {
+        log("reset = $i");
+        newValue = 1;
+      } else {
+        newValue = newValue + 1;
+      }
+      log("new value ==> ${newValue - 1}");
+      log("${currentDate + i} : ${weekdays[weekday + (newValue - 1)]}");
+
+      dayName
+          .add({"${currentDate + i}": "${weekdays[weekday + (newValue - 1)]}"});
+    }
+    log("dates with names ===> $dayName");
     return Container(
       height: 110.h,
       margin: EdgeInsets.only(left: 6.w),
@@ -367,13 +390,14 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            if (index != 0) {
-              currentDate = currentDate + 1;
-              weekday = weekday + 1;
-            } else {
-              currentDate = DateTime.now().day;
-              weekday = DateTime.now().weekday;
-            }
+            // if(weekday == 7){
+            //   weekday = 0;
+            //   dayName = weekdays[weekday];
+            //
+            // }else{
+            //   dayName = weekdays[weekday];
+            //   weekday ++;
+            // }
 
             return GestureDetector(
               onTap: () {
@@ -393,7 +417,7 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("$currentDate",
+                    Text("${currentDate + index}",
                         style: Theme.of(context).textTheme.bodyText1.copyWith(
                             fontWeight: FontWeight.w300,
                             fontSize: 34.sp,
@@ -403,7 +427,7 @@ class _SelectAppointmentTimeState extends State<SelectAppointmentTime> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    Text(weekdays[weekday - 1],
+                    Text("${dayName[index]["${currentDate + index}"]}",
                         style: Theme.of(context).textTheme.bodyText1.copyWith(
                             fontWeight: FontWeight.w600,
                             fontSize: 15.sp,
